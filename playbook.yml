@@ -7,3 +7,9 @@
        - virtualenv
        update_cache: yes
     become: yes
+  - name: Instalando dependencias com pip (Djando e Djandorest)
+    pip:
+      virtualenv: /home/ubuntu/estudo/venv
+      name:
+      - django
+      - djangorestframework
