@@ -13,3 +13,13 @@
       name:
       - django
       - djangorestframework
+  - name: Iniciando o projeto
+    shell: '. /home/ubuntu/estudo/venv/bin/activate; django-admin startproject setup /home/ubuntu/estudo'
+    #Esse parâmetro vai fazer com que o playbook continue independente do comando ter retornado OK, changed ou fail.
+    ignore_errors: yes
+  - name: Alterando hosts do settings
+    lineinfile:
+      path: /home/ubuntu/estudo/setup/settings.py
+      regexp: 'ALLOWED_HOSTS'
+      line: 'ALLOWED_HOSTS = ["*"]'
+      backrefs: yes
