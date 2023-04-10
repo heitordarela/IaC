@@ -13,23 +13,25 @@ provider "aws" {
   region  = var.regiao_aws
 }
 
-resource "aws_vpc" "main" {
-  cidr_block       = "10.0.0.0/16"
-  instance_tenancy = "default"
+# resource "aws_vpc" "main" {
+#   cidr_block       = "10.0.0.0/16"
+#   instance_tenancy = "default"
 
-  tags = {
-    Name = "main"
-  }
-}
+#   tags = {
+#     Name = "main"
+#   }
+# }
 
-resource "aws_instance" "app_server" {
-  ami           = "ami-0735c191cf914754d"
+resource "aws_launch_template" "maquina" {
+  image_id =  "ami-0735c191cf914754d"
   instance_type = var.instancia
   key_name = var.chave
   tags = {
     Name = "Terraform Ansible Python"
   }
   #Add Security Group
+  security_group_names =  [ var.ambiente ]
+  #vpc_security_group_ids = [aws_security_group.acesso_geral.id]
 }
 
 resource "aws_key_pair" "chaveSSH" {
@@ -37,6 +39,15 @@ resource "aws_key_pair" "chaveSSH" {
   public_key = file("${var.chave}.pub")
 }
 
-output "IP_publico" {
-  value = aws_instance.app_server.public_ip
+
+resource "aws_autoscaling_group" "grupo" {
+  availability_zones = [ "${var.regiao_aws}a" ]
+  name = var.nomeGrupo
+  desired_capacity = 1
+  max_size = var.maximo
+  min_size = var.minimo
+  launch_template {
+    id = aws_launch_template.maquina.id
+    version = "$Latest"
+  }
 }

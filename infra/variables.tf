@@ -10,3 +10,15 @@ variable "chave" {
 variable "ambiente" {
   type = string
 }
+
+variable "nomeGrupo" {
+  type = string
+}
+
+variable "maximo" {
+  type = number
+}
+
+variable "minimo" {
+  type = number
+}

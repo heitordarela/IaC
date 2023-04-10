@@ -1,7 +1,6 @@
 resource "aws_security_group" "acesso_geral" {
-    name = "acesso_${var.ambiente}"
-    description = "Grupo de acesso geral"
-    vpc_id = aws_vpc.main.id
+    name = var.ambiente
+    #vpc_id = aws_vpc.main.id
 
     ingress{
       cidr_blocks = [ "0.0.0.0/0" ]
@@ -18,7 +17,6 @@ resource "aws_security_group" "acesso_geral" {
       protocol = "-1"
   }
     tags = {
-        Name = "acesso_${var.ambiente}"
-        Role = "public"
+        Name = var.ambiente
     }
 }
