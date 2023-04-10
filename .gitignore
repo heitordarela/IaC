@@ -2,10 +2,16 @@
 # Local .terraform directories
 **/.terraform/*
 
+**/.history/*
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
 
 *.pem
+
+IaC-*
+
+*.hcl
 
 aws

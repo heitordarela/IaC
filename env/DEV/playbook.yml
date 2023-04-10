@@ -13,10 +13,15 @@
       name:
       - django
       - djangorestframework
+  - name: Verificando se o projeto ja existe
+    stat:
+      path: /home/ubuntu/estudo/setup/settings.py
+    register: projeto
   - name: Iniciando o projeto
     shell: '. /home/ubuntu/estudo/venv/bin/activate; django-admin startproject setup /home/ubuntu/estudo'
+    when: not projeto.stat.exists
     #Esse parâmetro vai fazer com que o playbook continue independente do comando ter retornado OK, changed ou fail.
-    ignore_errors: yes
+    #ignore_errors: yes
   - name: Alterando hosts do settings
     lineinfile:
       path: /home/ubuntu/estudo/setup/settings.py
