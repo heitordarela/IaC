@@ -7,4 +7,5 @@ module "aws-dev" {
     nomeGrupo = "DEV"
     minimo = 0
     maximo = 1
+    producao = false
 }
